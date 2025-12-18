@@ -13,7 +13,6 @@ import {
 
 import { StatsPlugin } from '@module-federation/manifest';
 import { ContainerManager, utils } from '@module-federation/managers';
-import { DtsPlugin } from '@module-federation/dts-plugin';
 import ReactBridgePlugin from '@module-federation/bridge-react-webpack-plugin';
 import path from 'node:path';
 import fs from 'node:fs';
@@ -141,6 +140,7 @@ export class ModuleFederationPlugin implements RspackPluginInstance {
     let disableDts = options.dts === false;
 
     if (!disableDts) {
+      const DtsPlugin = require('@module-federation/dts-plugin').DtsPlugin;
       const dtsPlugin = new DtsPlugin(options);
       // @ts-ignore
       dtsPlugin.apply(compiler);

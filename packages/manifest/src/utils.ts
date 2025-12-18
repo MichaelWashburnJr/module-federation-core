@@ -10,10 +10,6 @@ import {
   normalizeOptions,
   MetaDataTypes,
 } from '@module-federation/sdk';
-import {
-  isTSProject,
-  retrieveTypesAssetsInfo,
-} from '@module-federation/dts-plugin/core';
 import { HOT_UPDATE_SUFFIX, PLUGIN_IDENTIFIER } from './constants';
 import logger from './logger';
 
@@ -235,6 +231,13 @@ export function getTypesMetaInfo(
     api: '',
   };
   try {
+    if (!pluginOptions.dts) {
+      return defaultTypesMetaInfo;
+    }
+    const {
+      isTSProject,
+      retrieveTypesAssetsInfo,
+    } = require('@module-federation/dts-plugin/core');
     const normalizedDtsOptions =
       normalizeOptions<moduleFederationPlugin.PluginDtsOptions>(
         isTSProject(pluginOptions.dts, context),
